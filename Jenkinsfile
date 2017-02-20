@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                openshiftDeploy apiURL: "${apiURL}", authToken: '', depCfg: '', namespace: "${namespace}", verbose: 'false', waitTime: '', waitUnit: 'sec'
+                openshiftDeploy apiURL: "${apiURL}", authToken: '', depCfg: 'apache', namespace: "${namespace}", verbose: 'false', waitTime: '', waitUnit: 'sec'
             }
         }
     }
