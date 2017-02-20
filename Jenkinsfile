@@ -1,10 +1,12 @@
 pipeline {
     agent any
-
+    parameters {
+        string(name: 'miVariable', defaultValue: 'Hello', description: 'Escribe algo')
+    }
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo 'Building ${miVariable}..'
             }
         }
         stage('Test') {
