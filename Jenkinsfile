@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                com.openshift.jenkins.plugins.pipeline.OpenShiftDeployer(apiURL, deploymentConfig, namespace, '', '')
+                openshiftDeploy apiURL: '', authToken: '', depCfg: '', namespace: '', verbose: 'false', waitTime: '', waitUnit: 'sec'
             }
         }
     }
