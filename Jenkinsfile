@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building ${miVariable}.."
+                echo "Building .."
             }
         }
         stage('Test') {
@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                openshiftDeploy apiURL: '', authToken: '', depCfg: '', namespace: '', verbose: 'false', waitTime: '', waitUnit: 'sec'
+                openshiftDeploy apiURL: "${apiURL}", authToken: '', depCfg: '', namespace: "${namespace}", verbose: 'false', waitTime: '', waitUnit: 'sec'
             }
         }
     }
