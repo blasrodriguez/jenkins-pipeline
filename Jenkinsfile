@@ -1,4 +1,6 @@
 #!groovy​
+#openshiftCreateResource apiURL: "${apiURL}", authToken: '', jsonyaml: readFile('prueba.yml'), namespace: "${namespace}"
+
 pipeline {
     agent any
     parameters {
@@ -19,7 +21,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                openshiftDeploy apiURL: "${apiURL}", authToken: '', depCfg: 'apache', namespace: "${namespace}", verbose: 'false', waitTime: '', waitUnit: 'sec'
+                openshiftCreateResource apiURL: "${apiURL}", authToken: '', jsonyaml: readFile('prueba.yml'), namespace: "${namespace}"
             }
         }
     }
