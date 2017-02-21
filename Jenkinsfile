@@ -1,5 +1,4 @@
 #!groovy​
-#openshiftCreateResource apiURL: "${apiURL}", authToken: '', jsonyaml: readFile('prueba.yml'), namespace: "${namespace}"
 
 pipeline {
     agent any
