@@ -21,7 +21,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "Create Environment ${namespace}"
-                sh "oc new-project ${namespace}"
+                sh "oc new-project ${namespace} || true"
                 sh "oc adm policy add-scc-to-user anyuid -z default -n ${namespace}"
                 sh "oc new-app staging -p DNS_SUFFIX=${DNSname} -n ${namespace}"
             }
