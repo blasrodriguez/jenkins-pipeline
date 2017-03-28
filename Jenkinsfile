@@ -1,30 +1,28 @@
 #!groovy​
+def artifact_directory = "/tmp/artifacts"
+def redirect_url = 'http://nexus.beabloo.com/service/local/artifact/maven/redirect'
+def mybloo_artifact = "cms-frontend"
+def mybloo_group = "com.beabloo.mybloo"
+def mybloo_repo = "Releases"
+def engine_artifact = "BeablooEngine2"
+def engine_group = "com.beabloo"
+def engine_repo = "beabloo"
 
-pipeline {
-    agent any
-    parameters {
-        string(name: 'namespace', defaultValue: 'prueba14', description: 'Namespace or openshift project')
-        string(name: 'apiURL', defaultValue: 'https://master01.4lanr1rp12xutnpngwc0di13yb.ax.internal.cloudapp.net:8443/', description: 'Openshift API URL')
-        string(name: 'DNSname', defaultValue: 'prueba14', description: 'Final DNS will be DNSname.staging.beabloo.com')
-    }
-    stages {
-        stage('Build') {
-            steps {
-                echo "Building .."
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
+properties([[
+    $class: 'ParametersDefinitionProperty', parameterDefinitions: [
+        [$class: 'VersionParameterDefinition', artifactid: "${mybloo_artifact}", description: 'mybloo version', groupid: "${mybloo_group}", propertyName: 'mybloo_version', repoid: "${mybloo_repo}"],
+        [$class: 'VersionParameterDefinition', artifactid: "${engine_artifact}", description: 'engine2 version', groupid: "${engine_group}", propertyName: 'engine2_version', repoid: "${engine_repo}"]
+    ]
+]])
+node {
+        stage ('Get Artifacts from Nexus') {
+            sh "rm -rf ${artifact_directory}"
+            sh "mkdir ${artifact_directory}"
+            sh "curl -o $${artifact_directory}myfile.war ${redirect_url}?r=${mybloo_repo}&g=${mybloo_group}&a=${mybloo_artifact}&v=${parms.mybloo_version}&e=jar"
+
         }
         stage('Deploy') {
-            steps {
-                echo "Create Environment ${namespace}"
-                sh "oc new-project ${namespace} || true"
-                sh "oc adm policy add-scc-to-user anyuid -z default -n ${namespace}"
-                sh "oc new-app staging -p DNS_SUFFIX=${DNSname} -n ${namespace}"
-            }
+            echo "Hello ${redirect_url}"
+        //input message: 'Selecciona una', parameters: [[$class: 'VersionParameterDefinition', artifactid: 'cms-frontend', description: '', groupid: 'com.beabloo.mybloo', propertyName: '', repoid: 'Releases']]
         }
-    }
 }
