@@ -18,7 +18,7 @@ node {
         stage ('Get Artifacts from Nexus') {
             sh "rm -rf ${artifact_directory}"
             sh "mkdir ${artifact_directory}"
-            sh "curl -o $${artifact_directory}myfile.war ${redirect_url}?r=${mybloo_repo}&g=${mybloo_group}&a=${mybloo_artifact}&v=${parms.mybloo_version}&e=jar"
+            sh "curl -o $${artifact_directory}/cms-frontend.jar ${redirect_url}?r=${mybloo_repo}&g=${mybloo_group}&a=${mybloo_artifact}&v=${parms.mybloo_version}&e=jar"
 
         }
         stage('Deploy') {
