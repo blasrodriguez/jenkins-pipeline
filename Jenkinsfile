@@ -22,7 +22,7 @@ node {
 
         }
         stage('Deploy') {
-            echo "Hello ${redirect_url}"
+            sh "ls -l $${artifact_directory}"
         //input message: 'Selecciona una', parameters: [[$class: 'VersionParameterDefinition', artifactid: 'cms-frontend', description: '', groupid: 'com.beabloo.mybloo', propertyName: '', repoid: 'Releases']]
         }
 }
